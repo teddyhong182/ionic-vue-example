@@ -1,5 +1,10 @@
 <template>
   <div class="hello">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Reddit clone /r/aww</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-list>
       <ion-item v-for="post in posts" :key="post.data.id"
                 @click="handleClick(post.data.preview.images[0].source.url)">
