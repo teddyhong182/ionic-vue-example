@@ -46,10 +46,18 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  mounted () {
+    axios.get('https://www.reddit.com/r/aww.json?raw_json=1')
+      .then(response => {
+        console.log(response.data.data.children)
+      })
   },
   data () {
     return {
