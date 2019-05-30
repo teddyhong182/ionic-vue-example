@@ -1,45 +1,10 @@
 <template>
   <div class="hello">
-    <ion-label>Label</ion-label>
-    <div>
-      <ion-button @click="handleClick">Default</ion-button>
-    </div>
-
-    <ion-item>
-      <ion-label position="floating">Floating Label</ion-label>
-      <ion-input :value="myInput" @input="myInput = $event.target.value"></ion-input>
-    </ion-item>
-
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <div>1 of 3</div>
-        </ion-col>
-        <ion-col>
-          <div>2 of 3</div>
-        </ion-col>
-        <ion-col>
-          <div>3 of 3</div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-    <!-- List of Text Items -->
     <ion-list>
-      <ion-item>
-        <ion-label>Pokémon Yellow</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Mega Man X</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>The Legend of Zelda</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Pac-Man</ion-label>
-      </ion-item>
-      <ion-item>
-        <ion-label>Super Mario World</ion-label>
+      <ion-item v-for="post in posts" :key="post.data.id"
+                @click="handleClick(post.data.preview.images[0].source.url)">
+        <img :src="post.data.thumbnail" alt="thumbnail" class="thumbnail" />
+        <ion-label>{{ post.data.title }}</ion-label>
       </ion-item>
     </ion-list>
   </div>
@@ -56,17 +21,22 @@ export default {
   mounted () {
     axios.get('https://www.reddit.com/r/aww.json?raw_json=1')
       .then(response => {
-        console.log(response.data.data.children)
+        // console.log(response.data.data.children)
+        this.posts = response.data.data.children
       })
   },
   data () {
     return {
+      posts: [],
       myInput: ''
     }
   },
   methods: {
-    handleClick () {
-      alert(this.myInput)
+    handleClick (imageSrc) {
+      // alert(this.myInput)
+      this.$router.push({
+        name: 'about', params: { imageSrc }
+      })
     }
   }
 }
@@ -74,5 +44,12 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  border-radius: 30px;
+  margin-right: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 </style>
