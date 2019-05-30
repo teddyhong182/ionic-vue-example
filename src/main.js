@@ -3,13 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store'
+
+import Ionic from '@ionic/vue'
+
+Vue.use(Ionic)
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
   router,
-  components: { App },
-  template: '<App/>'
-})
+  store,
+  render: h => h(App)
+}).$mount('#app')
